@@ -1,0 +1,49 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Natural Language to SQL</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">Ask Your Question</h1>
+    <form method="POST" action="/">
+        <div class="form-group">
+            <label for="question">Enter your question about the purchases data:</label>
+            <input type="text" class="form-control" id="question" name="question" placeholder="e.g., Show all purchases made by Alice">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    {% if error %}
+    <div class="alert alert-danger mt-5" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    {% if results %}
+    <h2 class="mt-5">Results:</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                {% for column in columns %}
+                <th>{{ column }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in results %}
+            <tr>
+                {% for item in row.values() %}
+                <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+</body>
+</html>
